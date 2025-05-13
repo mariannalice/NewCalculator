@@ -5,39 +5,57 @@ class Program
 {
   static void Main ()
   {
-    Console.WriteLine("Welcome to your New Calculator!");
+    Console.WriteLine("\t\tWelcome to your New Calculator!\n");
     //Console.WriteLine("Enter two numbers and one of the following operators: | + | - | * | / |");
-    Console.WriteLine("Enter you first number: ");
-    string? FirstInput = Console.ReadLine();
-    double FirstNumber = double.Parse(FirstInput);
+    bool keepRunning = true;
 
-    Console.WriteLine("Enter you second number: ");
-    string SecondInput = Console.ReadLine();
-    double SecondNumber = double.Parse(SecondInput);
-
-    Console.WriteLine("Enter a operator: ");
-    string? Operator = Console.ReadLine();
-
-    double result = 0;
-    switch (Operator)
+    while (keepRunning)
     {
-      case "+":
-      result = Add.Addition(FirstNumber, SecondNumber);
-      break;
+      Console.WriteLine("Enter you first number: ");
+      double FirstNumber;
+      while (!double.TryParse(Console.ReadLine(), out FirstNumber))
+      {
+        Console.WriteLine("Invalid input. Please enter a valid number");
+      }
 
-      case "-":
-      result = Subtract.Subtraction(FirstNumber, SecondNumber);
-      break;
+      Console.WriteLine("Enter you second number: ");
+      double SecondNumber;
+      while (!double.TryParse(Console.ReadLine(), out SecondNumber))
+      {
+        Console.WriteLine("Invalid input. Please enter a valid number");
+      }
 
-      case "*":
-      result = Multiply.Multiplication(FirstNumber, SecondNumber);
-      break;
+      Console.WriteLine("Enter a operator: ");
+      string? Operator = Console.ReadLine();
 
-      case "/":
-      result = Divide.Division(FirstNumber, SecondNumber);
-      break;
+      double result = 0;
+      switch (Operator)
+      {
+        case "+":
+        result = Add.Addition(FirstNumber, SecondNumber);
+        break;
+
+        case "-":
+        result = Subtract.Subtraction(FirstNumber, SecondNumber);
+        break;
+
+        case "*":
+        result = Multiply.Multiplication(FirstNumber, SecondNumber);
+        break;
+
+        case "/":
+        result = Divide.Division(FirstNumber, SecondNumber);
+        break;
+      }
+
+      Console.WriteLine($"\n{FirstNumber} {Operator} {SecondNumber} = {result}\n");
+      Console.WriteLine("\nWould you like to do another operation?\n\n YES/NO\n ");
+      string? Answer = Console.ReadLine();
+
+      if (Answer?.ToLower() == "no" )
+      {
+        keepRunning = false;
+      }
     }
-
-    Console.WriteLine($"{FirstNumber} {Operator} {SecondNumber} = {result}");
   }
 }
